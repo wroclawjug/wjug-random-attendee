@@ -9,9 +9,10 @@ basically it is an angular 2 playground, which I suck at (or frontend in general
 If you, my dear reader, find it useful - be my guest. Fork it, copy it, steal it, do whatever you want. For details please refer to the license file.
 
 <h2>Building</h2>
-```
-git clone git@github.com:WrRaThY/wjug-random-attendee.git
-cd wjug-random-attendee
-npm install
-npm start
-```
+
+
+    git clone git@github.com:WrRaThY/wjug-random-attendee.git
+    cd wjug-random-attendee
+    npm install
+    npm start
+
