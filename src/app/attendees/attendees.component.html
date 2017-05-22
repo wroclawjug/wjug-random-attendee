@@ -1,0 +1,31 @@
+<div class="grid grid-pad">
+  <H3>Number of subscribed attendees: {{attendees.length}}</H3>
+
+  <div class="giant-random-button-holder">
+    <button (click)="randomAttendee()" class="giant-random-button">Random Attendee</button>
+    <button (click)="clearRandomAttendees()" class="giant-random-button">Clear</button>
+    <button (click)="notPresent()" class="giant-random-button">Last not present</button>
+  </div>
+
+  <div *ngIf="winners.length != 0">
+    <h2>Winners!</h2>
+    <div>
+      <a *ngFor="let person of winners" class="col-1-8" >
+        <div class="module hero">
+          <h4>{{person.member.name}}</h4>
+          <img src="{{person.member.photo.thumb}}">
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div style="clear: both" *ngIf="loosers.length != 0">
+    <h2>Guys who missed their opportunity :)</h2>
+    <a *ngFor="let person of loosers" class="col-1-8">
+      <div class="module hero">
+        <h4>{{person.member.name}}</h4>
+        <img src="{{person.member.photo.thumb}}">
+      </div>
+    </a>
+  </div>
+</div>
