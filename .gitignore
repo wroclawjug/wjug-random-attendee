@@ -4,3 +4,5 @@
 *.js.map
 !*spec.js
 !systemjs*.js
+nohup.out
+npm-debug.log
