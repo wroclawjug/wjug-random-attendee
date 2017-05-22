@@ -49,10 +49,12 @@ export class AttendeesComponent implements OnInit {
     //TODO: copy-paste from randomAttendee. some js method reference magic would be probably nice
     if (this.attendees.length == 0) {
       alert("Patience, my young apprentice")
+    } else if (this.winners.length == 0) {
+      alert("Try randomizing someone before marking them as absent first") //TODO: how to show modals? :D
     } else {
-      let notPresent: Attendee = this.winners[this.winners.length - 1];
-      this.loosers.push(notPresent);
+      let notPresent: Attendee = this.winners[this.winners.length - 1]; //TODO: pop should also work
       this.winners.splice(-1, 1);
+      this.loosers.push(notPresent);
     }
   }
 }
