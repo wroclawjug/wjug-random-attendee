@@ -7,17 +7,19 @@ import {Attendee} from "./attendee";
   styleUrls: ['./attendees.component.css'],
   templateUrl: './attendees.component.html',
 })
-export class AttendeesComponent implements OnInit {
+export class AttendeesComponent {
   attendees: Attendee[] = [];
   winners: Attendee[] = [];
   loosers: Attendee[] = [];
   usedIndexes: number[] = [];
+  eventId: number = 0;
 
   constructor(private attendeeService: AttendeesService) {
   }
 
-  ngOnInit(): void {
-    this.attendeeService.getAttendees()
+  fetchAttendees(newEventId): void {
+    this.eventId = newEventId;
+    this.attendeeService.getAttendees(this.eventId)
       .then(attendees => this.attendees = attendees);
   }
 
@@ -25,7 +27,7 @@ export class AttendeesComponent implements OnInit {
     if (this.attendees.length == 0) {
       alert("Patience, my young apprentice")
     } else {
-      this.winners.push(this.attendees[this.randomAttendeeIndexWithoutRepetition()]);
+      this.winners.unshift(this.attendees[this.randomAttendeeIndexWithoutRepetition()]);
     }
   }
 
@@ -52,9 +54,9 @@ export class AttendeesComponent implements OnInit {
     } else if (this.winners.length == 0) {
       alert("Try randomizing someone before marking them as absent first") //TODO: how to show modals? :D
     } else {
-      let notPresent: Attendee = this.winners[this.winners.length - 1]; //TODO: pop should also work
-      this.winners.splice(-1, 1);
-      this.loosers.push(notPresent);
+      let notPresent: Attendee = this.winners[0]; //TODO: pop should also work
+      this.winners.shift();
+      this.loosers.unshift(notPresent);
     }
   }
 }

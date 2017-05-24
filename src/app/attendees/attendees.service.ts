@@ -9,21 +9,19 @@ let attendance = '/attendance?';
 let apiKey = 'key=7e785063107f60423f18781a5566115';
 let jsonpCallback = 'callback=JSONP_CALLBACK';
 
-let lastMeetupId = 238766215; //used for testing
+//let lastMeetupId = 239325416; //used for testing
 
 @Injectable()
 export class AttendeesService {
   constructor(private http: Http, private jsonp: Jsonp) {
   }
 
-  getAttendees(): Promise<Attendee[]> {
-    return this.getLastMeetupId().then(lastId => {
-      return this.jsonp.get(this.buildLastMeetupUrl(lastId))
+  getAttendees(eventId): Promise<Attendee[]> {
+      return this.jsonp.get(this.buildLastMeetupUrl(eventId))
         .toPromise()
         .then(response => response.json().data as Attendee[])
         .catch(this.handleError);
-    });
-  }
+    }
 
   getLastMeetupId(): Promise<number> {
   let allPastMeetups = wjugUrlBase + '?' + jsonpCallback + '&status=past';

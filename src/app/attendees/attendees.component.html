@@ -1,7 +1,10 @@
 <div class="grid grid-pad">
-  <H3>Number of subscribed attendees: {{attendees.length}}</H3>
+  <H3>{{attendees.length}} attendees subscribed for meetup {{eventId}}</H3>
 
   <div class="giant-random-button-holder">
+    <label for="eventId" class="giant-label">EventId</label>
+    <input class="giant-label" name="eventId" ng-model="eventId" (change)="fetchAttendees($event.target.value)"/>
+    <br/>
     <button (click)="randomAttendee()" class="giant-random-button">Random Attendee</button>
     <button (click)="clearRandomAttendees()" class="giant-random-button">Clear</button>
     <button (click)="notPresent()" class="giant-random-button">Last not present</button>
