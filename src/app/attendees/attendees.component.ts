@@ -17,7 +17,7 @@ export class AttendeesComponent {
   constructor(private attendeeService: AttendeesService) {
   }
 
-  fetchAttendees(newEventId): void {
+  fetchAttendees(newEventId:number): void {
     this.eventId = newEventId;
     this.attendeeService.getAttendees(this.eventId)
       .then(attendees => this.attendees = attendees);
