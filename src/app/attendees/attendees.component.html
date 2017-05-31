@@ -2,19 +2,20 @@
   <H3>{{attendees.length}} attendees subscribed for meetup {{eventId}}</H3>
 
   <div class="giant-random-button-holder">
-    <div *ngIf="!hideConfig" class="animate-if">
-        <label for="eventId" class="giant-label">Token</label>
-        <input class="giant-label" name="eventId" type="password" ng-model="token" (change)="setToken($event.target.value)"/>
-        <label for="eventId" class="giant-label">EventId</label>
-        <input class="giant-label" name="eventId" ng-model="eventId" (change)="fetchAttendees($event.target.value)"/>
-    </div>
-    <br/>
-    <br/>
     <button (click)="randomAttendee()" class="giant-random-button">Random Attendee</button>
     <button (click)="clearRandomAttendees()" class="giant-random-button">Clear</button>
     <button (click)="notPresent()" class="giant-random-button">Last not present</button>
     <br/>
     <label>Hide config: <input type="checkbox" (change)="toggleConfig()"></label>
+    <br/>
+    <div *ngIf="!hideConfig" class="animate-if">
+      <label for="eventId" class="giant-label">Token</label>
+      <input class="giant-label" name="eventId" type="password" ng-model="token" (change)="tokenProvided($event.target.value)"/>
+      <br/>
+      <br/>
+      <label for="eventId" class="giant-label">EventId</label>
+      <input class="giant-label" name="eventId" ng-model="eventId" (change)="eventIdProvided($event.target.value)"/>
+    </div>
   </div>
 
   <div *ngIf="winners.length != 0">

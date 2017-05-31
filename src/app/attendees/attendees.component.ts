@@ -31,14 +31,21 @@ export class AttendeesComponent {
     this.hideConfig = !(this.hideConfig);
   }
 
-  setToken(token: string): void {
+  tokenProvided(token: string): void {
     this.token = token;
+    this.fetchAttendees();
   }
 
-  fetchAttendees(newEventId: number): void {
+  eventIdProvided(newEventId: number): void {
     this.eventId = newEventId;
-    this.attendeeService.getAttendees(this.eventId, this.token)
-      .then(attendees => this.attendees = attendees);
+    this.fetchAttendees();
+  }
+
+  fetchAttendees(): void {
+    if(this.eventId > 0 && this.token.length != 0) {
+      this.attendeeService.getAttendees(this.eventId, this.token)
+        .then(attendees => this.attendees = attendees);
+    }
   }
 
   randomAttendee(): void {
