@@ -6,7 +6,7 @@ import {Attendee} from "./attendee";
 let and = '&';
 let wjugUrlBase = 'https://api.meetup.com/Warszawa-JUG/events/';
 let attendance = '/attendance?';
-let apiKey = 'key=e1e745436265714d6b76a49364e77';
+let apiKey = 'key=';
 let jsonpCallback = 'callback=JSONP_CALLBACK';
 
 //let lastMeetupId = 239325416; //used for testing
@@ -16,8 +16,8 @@ export class AttendeesService {
   constructor(private http: Http, private jsonp: Jsonp) {
   }
 
-  getAttendees(eventId:number): Promise<Attendee[]> {
-      return this.jsonp.get(this.buildLastMeetupUrl(eventId))
+  getAttendees(eventId:number, token:string): Promise<Attendee[]> {
+      return this.jsonp.get(this.buildLastMeetupUrl(eventId, token))
         .toPromise()
         .then(response => response.json().data as Attendee[])
         .catch(this.handleError);
@@ -37,8 +37,8 @@ export class AttendeesService {
   }
 
   //example meetup Url = 'https://api.meetup.com/Warszawa-JUG/events/238766215/attendance?callback=JSONP_CALLBACK&sig_id=204220190&sig=6b8aa26ce3a020b7649b438d4ec421958888e063';
-  private buildLastMeetupUrl(meetupId: number) {
-    return wjugUrlBase + meetupId + attendance + jsonpCallback + and + apiKey;
+  private buildLastMeetupUrl(meetupId: number, token: string) {
+    return wjugUrlBase + meetupId + attendance + jsonpCallback + and + apiKey + token;
   }
 
   private handleError(error: any): Promise<any> {

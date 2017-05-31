@@ -1,6 +1,6 @@
-import {Component, OnInit} from "@angular/core";
+import {Component} from "@angular/core";
 import {AttendeesService} from "./attendees.service";
-import {Attendee} from "./attendee";
+import {Attendee, Photo} from "./attendee";
 
 @Component({
   selector: 'attendees',
@@ -13,14 +13,39 @@ export class AttendeesComponent {
   loosers: Attendee[] = [];
   usedIndexes: number[] = [];
   eventId: number = 0;
+  token: string = '';
+  hideConfig: boolean = false;
 
   constructor(private attendeeService: AttendeesService) {
   }
 
-  fetchAttendees(newEventId:number): void {
+  realUrl(photo: Photo): String {
+    try {
+      return photo.thumb;
+    } catch (err) {
+      return 'http://s.quickmeme.com/img/a8/a8022006b463b5ed9be5a62f1bdbac43b4f3dbd5c6b3bb44707fe5f5e26635b0.jpg'
+    }
+  }
+
+  toggleConfig(): void {
+    this.hideConfig = !(this.hideConfig);
+  }
+
+  tokenProvided(token: string): void {
+    this.token = token;
+    this.fetchAttendees();
+  }
+
+  eventIdProvided(newEventId: number): void {
     this.eventId = newEventId;
-    this.attendeeService.getAttendees(this.eventId)
-      .then(attendees => this.attendees = attendees);
+    this.fetchAttendees();
+  }
+
+  fetchAttendees(): void {
+    if(this.eventId > 0 && this.token.length != 0) {
+      this.attendeeService.getAttendees(this.eventId, this.token)
+        .then(attendees => this.attendees = attendees);
+    }
   }
 
   randomAttendee(): void {
