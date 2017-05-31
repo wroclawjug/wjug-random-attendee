@@ -10,5 +10,5 @@ export class Member {
 }
 
 export class Photo {
-  thumb: URL;
+  thumb: String;
 }
