@@ -112,3 +112,8 @@ h4 {
     width: 20%;
   }
 }
+
+.winnerPhoto {
+    max-width: 80px;
+    max-height: 80px;
+}

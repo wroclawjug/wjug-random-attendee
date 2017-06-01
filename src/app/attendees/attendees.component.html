@@ -24,7 +24,7 @@
       <a *ngFor="let person of winners" class="col-1-8" >
         <div class="module hero">
           <h4>{{person.member.name}}</h4>
-          <img src="{{this.realUrl(person.member.photo)}}">
+          <img class="winnerPhoto" src="{{this.realUrl(person.member.photo)}}">
         </div>
       </a>
     </div>
