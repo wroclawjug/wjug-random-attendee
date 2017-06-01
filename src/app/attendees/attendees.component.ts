@@ -51,6 +51,8 @@ export class AttendeesComponent {
   randomAttendee(): void {
     if (this.attendees.length == 0) {
       alert("Patience, my young apprentice")
+    } else if (this.attendees.length == this.usedIndexes.length) {
+      alert("Everyone was already choosen")
     } else {
       this.winners.unshift(this.attendees[this.randomAttendeeIndexWithoutRepetition()]);
     }
