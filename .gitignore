@@ -6,3 +6,5 @@
 !systemjs*.js
 nohup.out
 npm-debug.log
+dist
+.DS_Store

@@ -12,5 +12,6 @@ If you, my dear reader, find it useful - be my guest. Fork it, copy it, steal it
 git clone git@github.com:WrRaThY/wjug-random-attendee.git
 cd wjug-random-attendee
 npm install
-npm start
+npm install -g @angular/cli
+ng serve
 ```
