@@ -4,7 +4,7 @@ import "rxjs/add/operator/toPromise";
 import {Attendee} from "./attendee";
 
 let and = '&';
-let wjugUrlBase = 'https://api.meetup.com/Warszawa-JUG/events/';
+let wjugUrlBase = 'https://api.meetup.com/WroclawJUG/events/';
 let attendance = '/attendance?';
 let apiKey = 'key=';
 let jsonpCallback = 'callback=JSONP_CALLBACK';

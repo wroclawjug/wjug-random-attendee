@@ -1,4 +1,4 @@
-<H1>WJUG Random Attendee</H1>
+<H1>WrocławJUG Random Attendee</H1>
 
 hello and welcome
 
