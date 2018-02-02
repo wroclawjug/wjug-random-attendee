@@ -9,12 +9,18 @@
     <label>Hide config: <input type="checkbox" (change)="toggleConfig()"></label>
     <br/>
     <div *ngIf="!hideConfig" class="animate-if">
-      <label for="eventId" class="giant-label">Token</label>
-      <input class="giant-label" name="eventId" type="password" ng-model="token" (change)="tokenProvided($event.target.value)"/>
+      <label for="token" class="giant-label">Token</label>
+      <input class="giant-label" name="token" type="password" ng-model="token" (change)="tokenProvided($event.target.value)"/>
       <br/>
       <br/>
-      <label for="eventId" class="giant-label">EventId</label>
-      <input class="giant-label" name="eventId" ng-model="eventId" (change)="eventIdProvided($event.target.value)"/>
+      <label class="giant-label">Meetups</label>
+      <br/>
+      <div>
+        <a *ngFor="let meetup of meetupEvents">
+          <button (click)="eventIdProvided($event.target.value)" class="giant-random-button" ng-model="eventId"
+                  value="{{meetup.id}}">{{meetup.name}} {{meetup.id}}</button>
+        </a>
+      </div>
     </div>
   </div>
 

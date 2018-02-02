@@ -12,3 +12,9 @@ export class Member {
 export class Photo {
   thumb: String;
 }
+
+export class Meetup {
+  id: number;
+  name: string;
+  link: string;
+}

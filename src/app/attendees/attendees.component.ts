@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {AttendeesService} from "./attendees.service";
-import {Attendee, Photo} from "./attendee";
+import {Attendee, Photo, Meetup} from "./attendee";
 
 @Component({
   selector: 'attendees',
@@ -8,6 +8,7 @@ import {Attendee, Photo} from "./attendee";
   templateUrl: './attendees.component.html',
 })
 export class AttendeesComponent {
+  meetupEvents: Meetup[] = [];
   attendees: Attendee[] = [];
   winners: Attendee[] = [];
   loosers: Attendee[] = [];
@@ -33,7 +34,7 @@ export class AttendeesComponent {
 
   tokenProvided(token: string): void {
     this.token = token;
-    this.fetchAttendees();
+    this.fetchMettupEvents();
   }
 
   eventIdProvided(newEventId: number): void {
@@ -41,8 +42,15 @@ export class AttendeesComponent {
     this.fetchAttendees();
   }
 
+  fetchMettupEvents(): void {
+    if (this.token.length != 0) {
+      this.attendeeService.getMettupEvents(this.token)
+        .then(meetupEvents => this.meetupEvents = meetupEvents);
+    }
+  }
+
   fetchAttendees(): void {
-    if(this.eventId > 0 && this.token.length != 0) {
+    if (this.eventId > 0 && this.token.length != 0) {
       this.attendeeService.getAttendees(this.eventId, this.token)
         .then(attendees => this.attendees = attendees);
     }
