@@ -1,5 +1,5 @@
 <div class="grid grid-pad">
-  <H3>{{attendees.length}} attendees subscribed for meetup {{eventId}}</H3>
+  <H3>{{attendees.length}} attendees subscribed</H3>
 
   <div class="giant-random-button-holder">
     <button (click)="randomAttendee()" class="giant-random-button">Random Attendee</button>
@@ -18,7 +18,7 @@
       <div>
         <a *ngFor="let meetup of meetupEvents">
           <button (click)="eventIdProvided($event.target.value)" class="giant-random-button" ng-model="eventId"
-                  value="{{meetup.id}}">{{meetup.name}} {{meetup.id}}</button>
+                  value="{{meetup.id}}">{{meetup.name}}</button>
         </a>
       </div>
     </div>
