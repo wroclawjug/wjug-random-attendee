@@ -19,6 +19,7 @@
         <a *ngFor="let meetup of meetupEvents">
           <button (click)="eventIdProvided($event.target.value)" class="giant-random-button" ng-model="eventId"
                   value="{{meetup.id}}">{{meetup.name}}</button>
+          <br/>
         </a>
       </div>
     </div>

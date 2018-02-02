@@ -8,7 +8,8 @@
         "root": "src",
         "outDir": "dist",
         "assets": [
-          "favicon.png"
+          "favicon.png",
+          "assets"
         ],
         "deployUrl": "losowarka",
         "index": "index.html",
