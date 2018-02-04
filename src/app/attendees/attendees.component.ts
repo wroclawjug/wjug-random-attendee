@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {AttendeesService} from "./attendees.service";
-import {Attendee, Photo, Meetup} from "./attendee";
+import {Attendee, Photo, Meetup, MemberFull} from "./attendee";
 
 @Component({
   selector: 'attendees',
@@ -17,6 +17,9 @@ export class AttendeesComponent {
   token: string = '';
   hideConfig: boolean = false;
 
+  readonly notFoundPhoto = 'http://s.quickmeme.com/img/a8/a8022006b463b5ed9be5a62f1bdbac43b4f3dbd5c6b3bb44707fe5f5e26635b0.jpg';
+
+
   constructor(private attendeeService: AttendeesService) {
   }
 
@@ -24,7 +27,7 @@ export class AttendeesComponent {
     try {
       return photo.thumb;
     } catch (err) {
-      return 'http://s.quickmeme.com/img/a8/a8022006b463b5ed9be5a62f1bdbac43b4f3dbd5c6b3bb44707fe5f5e26635b0.jpg'
+      return this.notFoundPhoto;
     }
   }
 
@@ -58,11 +61,26 @@ export class AttendeesComponent {
 
   randomAttendee(): void {
     if (this.attendees.length == 0) {
-      alert("Patience, my young apprentice")
+      alert('Patience, my young apprentice');
     } else if (this.attendees.length == this.usedIndexes.length) {
-      alert("Everyone was already choosen")
+      alert('Everyone was already choosen');
     } else {
-      this.winners.unshift(this.attendees[this.randomAttendeeIndexWithoutRepetition()]);
+      let winner = this.attendees[this.randomAttendeeIndexWithoutRepetition()];
+      this.attendeeService.getMemberFull(winner, this.token)
+        .then(memberFull => {
+          if (memberFull.photo) {
+            if (memberFull.photo.highres_link) {
+              winner.member.photoFull = memberFull.photo.highres_link;
+            } else if (memberFull.photo.photo_link) {
+              winner.member.photoFull = memberFull.photo.photo_link;
+            } else {
+              winner.member.photoFull = memberFull.photo.thumb_link;
+            }
+          } else {
+            winner.member.photoFull = this.notFoundPhoto;
+          }
+          this.winners.unshift(winner);
+        });
     }
   }
 
