@@ -42,6 +42,7 @@ export class AttendeesComponent {
 
   eventIdProvided(newEventId: number): void {
     this.eventId = newEventId;
+    this.toggleConfig();
     this.fetchAttendees();
   }
 

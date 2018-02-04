@@ -6,7 +6,7 @@
     <button (click)="clearRandomAttendees()" class="giant-random-button">Clear</button>
     <button (click)="notPresent()" class="giant-random-button">Last not present</button>
     <br/>
-    <label>Hide config: <input type="checkbox" (change)="toggleConfig()"></label>
+    <label>Hide config: <input type="checkbox" (change)="toggleConfig()" [checked]="hideConfig"></label>
     <br/>
     <div *ngIf="!hideConfig" class="animate-if">
       <label for="token" class="giant-label">Token</label>
@@ -49,6 +49,12 @@
       <div class="module hero">
         <h4>{{person.member.name}}</h4>
         <img class="attendeePhoto" src="{{this.realUrl(person.member.photo)}}">
+        <div class="moduletooltip">
+          <h2><a href="https://www.meetup.com/members/{{person.member.id}}/" target="_blank">
+            {{person.member.name}}
+          </a></h2>
+          <img class="attendeePhotoFull" src="{{person.member.photoFull}}">
+        </div>
       </div>
     </a>
   </div>
