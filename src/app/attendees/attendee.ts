@@ -1,6 +1,7 @@
 export class Attendee {
   status: String;
   member: Member;
+  rsvp: Rsvp;
 }
 
 export class Member {
@@ -30,4 +31,8 @@ export class Meetup {
   id: number;
   name: string;
   link: string;
+}
+
+export class Rsvp {
+  response: String;
 }

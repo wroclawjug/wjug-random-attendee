@@ -28,6 +28,7 @@ export class AttendeesService {
       return this.jsonp.get(this.buildLastMeetupUrl(eventId, token))
         .toPromise()
         .then(response => response.json().data as Attendee[])
+        .then(response => response.filter(attendee => attendee.rsvp.response === 'yes'))
         .catch(this.handleError);
     }
 
