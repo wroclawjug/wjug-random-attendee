@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  logoImage: any = '../assets/img/WroclawJUG.png';
+  logoImage: any = '/assets/img/WroclawJUG.png';
 }

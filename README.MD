@@ -13,3 +13,8 @@ npm install
 npm install -g @angular/cli
 ng serve
 ```
+
+For production:
+```
+ng build --base-href=/
+```
