@@ -28,6 +28,7 @@ a {
 }
 
 h3 {
+  margin-top: 0;
   text-align: center;
   margin-bottom: 0;
   font-size: 30px;
@@ -60,6 +61,29 @@ h4 {
   background-color: #EEE;
   cursor: pointer;
   color: #607d8b;
+}
+
+.module .moduletooltip {
+  visibility: hidden;
+  width: 90%;
+  height: 90%;
+  background-color: #607D8B;
+  color: #EEE;
+  border-radius: 6px;
+  position: fixed;
+  top: 5%;
+  left: 5%;
+  right: 5%;
+  bottom: 5%;
+  z-index: 1;
+}
+
+.module:hover .moduletooltip {
+  visibility: visible;
+}
+
+.moduletooltip a {
+  color: #EEE;
 }
 
 .grid-pad {
@@ -116,4 +140,9 @@ h4 {
 .attendeePhoto {
     max-width: 80px;
     max-height: 80px;
+}
+
+.attendeePhotoFull {
+    max-width: 80%;
+    max-height: 80%;
 }

@@ -1,20 +1,27 @@
 <div class="grid grid-pad">
-  <H3>{{attendees.length}} attendees subscribed for meetup {{eventId}}</H3>
+  <H3>{{attendees.length}} attendees subscribed</H3>
 
   <div class="giant-random-button-holder">
     <button (click)="randomAttendee()" class="giant-random-button">Random Attendee</button>
     <button (click)="clearRandomAttendees()" class="giant-random-button">Clear</button>
     <button (click)="notPresent()" class="giant-random-button">Last not present</button>
     <br/>
-    <label>Hide config: <input type="checkbox" (change)="toggleConfig()"></label>
+    <label>Hide config: <input type="checkbox" (change)="toggleConfig()" [checked]="hideConfig"></label>
     <br/>
     <div *ngIf="!hideConfig" class="animate-if">
-      <label for="eventId" class="giant-label">Token</label>
-      <input class="giant-label" name="eventId" type="password" ng-model="token" (change)="tokenProvided($event.target.value)"/>
+      <label for="token" class="giant-label">Token</label>
+      <input class="giant-label" name="token" type="password" ng-model="token" (change)="tokenProvided($event.target.value)"/>
       <br/>
       <br/>
-      <label for="eventId" class="giant-label">EventId</label>
-      <input class="giant-label" name="eventId" ng-model="eventId" (change)="eventIdProvided($event.target.value)"/>
+      <label class="giant-label">Meetups</label>
+      <br/>
+      <div>
+        <a *ngFor="let meetup of meetupEvents">
+          <button (click)="eventIdProvided($event.target.value)" class="giant-random-button" ng-model="eventId"
+                  value="{{meetup.id}}">{{meetup.name}}</button>
+          <br/>
+        </a>
+      </div>
     </div>
   </div>
 
@@ -25,6 +32,12 @@
         <div class="module hero">
           <h4>{{person.member.name}}</h4>
           <img class="attendeePhoto" src="{{this.realUrl(person.member.photo)}}">
+          <div class="moduletooltip">
+            <h2><a href="https://www.meetup.com/members/{{person.member.id}}/" target="_blank">
+              {{person.member.name}}
+            </a></h2>
+            <img class="attendeePhotoFull" src="{{person.member.photoFull}}">
+          </div>
         </div>
       </a>
     </div>
@@ -36,6 +49,12 @@
       <div class="module hero">
         <h4>{{person.member.name}}</h4>
         <img class="attendeePhoto" src="{{this.realUrl(person.member.photo)}}">
+        <div class="moduletooltip">
+          <h2><a href="https://www.meetup.com/members/{{person.member.id}}/" target="_blank">
+            {{person.member.name}}
+          </a></h2>
+          <img class="attendeePhotoFull" src="{{person.member.photoFull}}">
+        </div>
       </div>
     </a>
   </div>
