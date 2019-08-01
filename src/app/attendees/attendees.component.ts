@@ -48,7 +48,7 @@ export class AttendeesComponent {
 
   fetchMettupEvents(): void {
     if (this.token.length != 0) {
-      this.attendeeService.getMettupEvents(this.token)
+      this.attendeeService.getMeetupEvents(this.token)
         .then(meetupEvents => this.meetupEvents = meetupEvents);
     }
   }

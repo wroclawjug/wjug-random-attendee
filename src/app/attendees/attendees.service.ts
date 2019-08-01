@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Http, Jsonp} from "@angular/http";
+import {HttpClient} from "@angular/common/http";
 import "rxjs/add/operator/toPromise";
 import {Attendee, Meetup, MemberFull} from "./attendee";
 
@@ -10,32 +10,49 @@ let attendance = '/attendance?';
 let question = '?';
 let apiKey = 'key=';
 let jsonpCallback = 'callback=JSONP_CALLBACK';
+let jsonpCallbackName = 'JSONP_CALLBACK';
 let scrollRecentPast = 'scroll=recent_past';
 
 @Injectable()
 export class AttendeesService {
-  constructor(private http: Http, private jsonp: Jsonp) {
+  constructor(private httpClient: HttpClient) {
   }
 
-  getMettupEvents(token: string): Promise<Meetup[]> {
-    return this.jsonp.get(this.buildMeetupEventsUrl(token))
+  getMeetupEvents(token: string): Promise<Meetup[]> {
+    console.log('getMeetupEvents');
+    return this.httpClient.jsonp(this.buildMeetupEventsUrl(token), jsonpCallbackName)
       .toPromise()
-      .then(response => response.json().data as Meetup[])
+      .then(this.handleMeetupEvents)
       .catch(this.handleError);
   }
 
+  handleMeetupEvents(response: any): Meetup[] {
+    if (response.meta.status != 200) {
+      return []
+    }
+    return response.data as Meetup[];
+  }
+
   getAttendees(eventId: number, token: string): Promise<Attendee[]> {
-      return this.jsonp.get(this.buildLastMeetupUrl(eventId, token))
+      console.log('getAttendees');
+      return this.httpClient.jsonp(this.buildLastMeetupUrl(eventId, token), jsonpCallbackName)
         .toPromise()
-        .then(response => response.json().data as Attendee[])
-        .then(response => response.filter(attendee => attendee.rsvp.response === 'yes'))
+        .then(this.handleAttendees)
         .catch(this.handleError);
     }
 
+  handleAttendees(response: any): Attendee[] {
+    if (response.meta.status != 200) {
+      return []
+    }
+    let attendees: Attendee[] = response.data;
+    return attendees.filter(attendee => attendee.rsvp.response === 'yes')
+  }
+
   getMemberFull(attende: Attendee, token: string): Promise<MemberFull> {
-    return this.jsonp.get(this.buildMemberFullUrl(attende.member.id, token))
+    return this.httpClient.jsonp(this.buildMemberFullUrl(attende.member.id, token), jsonpCallbackName)
       .toPromise()
-      .then(response => response.json().data as MemberFull)
+      .then((response: any) => response.data as MemberFull)
       .catch(this.handleError);
   }
 
