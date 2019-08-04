@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {JwksValidationHandler, OAuthService} from 'angular-oauth2-oidc';
+import {authConfig} from './auth.config';
 
 @Component({
   selector: 'my-app',
@@ -7,4 +9,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   logoImage: any = '/assets/img/WroclawJUG.png';
+
+  constructor(private oauthService: OAuthService) {
+    this.oauthService.configure(authConfig);
+  }
 }

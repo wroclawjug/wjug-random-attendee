@@ -1,14 +1,30 @@
-import {NgModule} from "@angular/core";
-import {BrowserModule} from "@angular/platform-browser";
-import {FormsModule} from "@angular/forms";
-import {HttpClientModule, HttpClientJsonpModule} from "@angular/common/http";
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule} from '@angular/forms';
+import {HttpClientJsonpModule, HttpClientModule,} from '@angular/common/http';
 
+import {AppComponent} from './app.component';
+import {AttendeesService} from './attendees/attendees.service';
+import {AttendeesComponent} from './attendees/attendees.component';
+import {
+  AuthConfig,
+  JwksValidationHandler,
+  OAuthModule,
+  OAuthModuleConfig,
+  OAuthStorage,
+  ValidationHandler
+} from 'angular-oauth2-oidc';
+import {authConfig} from "./auth.config";
 
-// import {AppRoutingModule} from "./app-routing.module";
-
-import {AppComponent} from "./app.component";
-import {AttendeesService} from "./attendees/attendees.service";
-import {AttendeesComponent} from "./attendees/attendees.component";
+const authModuleConfig: OAuthModuleConfig = {
+  resourceServer: {
+    allowedUrls: [
+      'https://api.meetup.com/',
+      'https://cors-anywhere.herokuapp.com/',
+    ],
+    sendAccessToken: true
+  }
+};
 
 @NgModule({
   imports: [
@@ -16,14 +32,18 @@ import {AttendeesComponent} from "./attendees/attendees.component";
     FormsModule,
     HttpClientModule,
     HttpClientJsonpModule,
-    // AppRoutingModule
+    OAuthModule.forRoot(authModuleConfig),
   ],
   declarations: [
     AppComponent,
     AttendeesComponent
   ],
   providers: [
-    AttendeesService
+    AttendeesService,
+    {provide: OAuthModuleConfig, useValue: authModuleConfig},
+    {provide: ValidationHandler, useClass: JwksValidationHandler},
+    {provide: OAuthStorage, useValue: localStorage},
+    {provide: AuthConfig, useValue: authConfig},
   ],
   bootstrap: [AppComponent]
 })
