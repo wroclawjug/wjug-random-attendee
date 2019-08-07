@@ -9,15 +9,19 @@
     <label>Hide config: <input type="checkbox" (change)="toggleConfig()" [checked]="hideConfig"></label>
     <br/>
     <div *ngIf="!hideConfig" class="animate-if">
-      <label for="token" class="giant-label">Token</label>
-      <input class="giant-label" name="token" type="password" ng-model="token" (change)="tokenProvided($event.target.value)"/>
+      <button *ngIf="!isLoggedIn()" class="btn btn-default" (click)="login()">
+        Login
+      </button>
       <br/>
       <br/>
+      <div *ngIf="meetupEvents.length === 0" >
+        <button (click)="fetchMettupEvents()" class="btn btn-default">Load Meetups</button>
+      </div>
       <label class="giant-label">Meetups</label>
       <br/>
       <div>
         <a *ngFor="let meetup of meetupEvents">
-          <button (click)="eventIdProvided($event.target.value)" class="giant-random-button" ng-model="eventId"
+          <button (click)="eventIdProvided($event.target.value)" class="giant-random-button"
                   value="{{meetup.id}}">{{meetup.name}}</button>
           <br/>
         </a>
@@ -25,7 +29,7 @@
     </div>
   </div>
 
-  <div *ngIf="winners.length != 0">
+  <div *ngIf="winners.length !== 0">
     <h2>Winners!</h2>
     <div>
       <a *ngFor="let person of winners" class="col-1-8" >
@@ -36,14 +40,14 @@
             <h2><a href="https://www.meetup.com/members/{{person.member.id}}/" target="_blank">
               {{person.member.name}}
             </a></h2>
-            <img class="attendeePhotoFull" src="{{person.member.photoFull}}">
+            <img class="attendeePhotoFull" src="{{person.member.photo.highres_link}}">
           </div>
         </div>
       </a>
     </div>
   </div>
 
-  <div style="clear: both" *ngIf="loosers.length != 0">
+  <div style="clear: both" *ngIf="loosers.length !== 0">
     <h2>Guys who missed their opportunity :)</h2>
     <a *ngFor="let person of loosers" class="col-1-8">
       <div class="module hero">
@@ -53,7 +57,7 @@
           <h2><a href="https://www.meetup.com/members/{{person.member.id}}/" target="_blank">
             {{person.member.name}}
           </a></h2>
-          <img class="attendeePhotoFull" src="{{person.member.photoFull}}">
+          <img class="attendeePhotoFull" src="{{person.member.photo.highres_link}}">
         </div>
       </div>
     </a>

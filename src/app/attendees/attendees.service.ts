@@ -1,56 +1,48 @@
-import {Injectable} from "@angular/core";
-import {Http, Jsonp} from "@angular/http";
-import "rxjs/add/operator/toPromise";
-import {Attendee, Meetup, MemberFull} from "./attendee";
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import 'rxjs/add/operator/toPromise';
+import {Attendee, Meetup, Member} from './attendee';
 
-let and = '&';
-let wjugUrlBase = 'https://api.meetup.com/WroclawJUG/events/';
-let membersUrlBase = 'https://api.meetup.com/members/';
-let attendance = '/attendance?';
-let question = '?';
-let apiKey = 'key=';
-let jsonpCallback = 'callback=JSONP_CALLBACK';
-let scrollRecentPast = 'scroll=recent_past';
+let corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
+let wjugUrlBase = `${corsAnywhere}https://api.meetup.com/WroclawJUG/events/`;
+let membersUrlBase = `${corsAnywhere}https://api.meetup.com/members/`;
 
 @Injectable()
 export class AttendeesService {
-  constructor(private http: Http, private jsonp: Jsonp) {
+  constructor(private httpClient: HttpClient) {
   }
 
-  getMettupEvents(token: string): Promise<Meetup[]> {
-    return this.jsonp.get(this.buildMeetupEventsUrl(token))
+  getMeetupEvents(): Promise<Meetup[]> {
+    return this.httpClient.get<Meetup[]>(this.buildMeetupEventsUrl())
       .toPromise()
-      .then(response => response.json().data as Meetup[])
       .catch(this.handleError);
   }
 
-  getAttendees(eventId: number, token: string): Promise<Attendee[]> {
-      return this.jsonp.get(this.buildLastMeetupUrl(eventId, token))
-        .toPromise()
-        .then(response => response.json().data as Attendee[])
-        .then(response => response.filter(attendee => attendee.rsvp.response === 'yes'))
-        .catch(this.handleError);
-    }
-
-  getMemberFull(attende: Attendee, token: string): Promise<MemberFull> {
-    return this.jsonp.get(this.buildMemberFullUrl(attende.member.id, token))
+  getAttendees(eventId: number): Promise<Attendee[]> {
+    console.log('getAttendees');
+    return this.httpClient.get<Attendee[]>(this.buildLastMeetupUrl(eventId))
       .toPromise()
-      .then(response => response.json().data as MemberFull)
       .catch(this.handleError);
   }
 
-  //example https://api.meetup.com/WroclawJUG/events/123/attendance?callback=__ng_jsonp__.__req0.finished&key=XYZ
-  private buildLastMeetupUrl(meetupId: number, token: string) {
-    return wjugUrlBase + meetupId + attendance + jsonpCallback + and + apiKey + token;
+  getMemberFull(attende: Attendee): Promise<Member> {
+    return this.httpClient.get<Member>(this.buildMemberFullUrl(attende.member.id))
+      .toPromise()
+      .catch(this.handleError);
+  }
+
+  // example https://api.meetup.com/WroclawJUG/events/123/attendance?callback=__ng_jsonp__.__req0.finished&key=XYZ
+  private buildLastMeetupUrl(meetupId: number) {
+    return `${wjugUrlBase}${meetupId}/attendance`;
   }
 
   // example https://api.meetup.com/WroclawJUG/events?&sign=true&photo-host=public&page=20
-  private buildMeetupEventsUrl(token: string) {
-    return wjugUrlBase + question + jsonpCallback + and + scrollRecentPast + and + apiKey + token;
+  private buildMeetupEventsUrl() {
+    return `${wjugUrlBase}?scroll=recent_past`;
   }
 
-  private buildMemberFullUrl(id: number, token: string) {
-    return membersUrlBase + id + question + jsonpCallback + and + apiKey + token;
+  private buildMemberFullUrl(id: number) {
+    return `${membersUrlBase}${id}`;
   }
 
   private handleError(error: any): Promise<any> {
@@ -58,4 +50,3 @@ export class AttendeesService {
     return Promise.reject(error.message || error);
   }
 }
-
