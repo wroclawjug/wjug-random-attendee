@@ -17,7 +17,7 @@ export class AttendeesComponent {
   eventId = 0;
   hideConfig = false;
 
-  readonly notFoundPhoto = 'http://s.quickmeme.com/img/a8/a8022006b463b5ed9be5a62f1bdbac43b4f3dbd5c6b3bb44707fe5f5e26635b0.jpg';
+  readonly notFoundPhoto: String = 'http://s.quickmeme.com/img/a8/a8022006b463b5ed9be5a62f1bdbac43b4f3dbd5c6b3bb44707fe5f5e26635b0.jpg';
 
 
   constructor(private attendeeService: AttendeesService, private oauthService: OAuthService) {
@@ -44,6 +44,20 @@ export class AttendeesComponent {
     } catch (err) {
       return this.notFoundPhoto;
     }
+  }
+
+  highResPhotoUrl(photo: Photo): String {
+    let photoUrl = this.notFoundPhoto;
+    if (photo) {
+      if (photo.highres_link) {
+        photoUrl = photo.highres_link;
+      } else if (photo.photo_link) {
+        photoUrl = photo.photo_link;
+      } else {
+        photoUrl = photo.thumb_link;
+      }
+    }
+    return photoUrl;
   }
 
   toggleConfig(): void {
