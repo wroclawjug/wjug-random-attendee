@@ -14,7 +14,6 @@ import {
   OAuthStorage,
   ValidationHandler
 } from 'angular-oauth2-oidc';
-import {authConfig} from "./auth.config";
 
 const authModuleConfig: OAuthModuleConfig = {
   resourceServer: {
@@ -43,7 +42,6 @@ const authModuleConfig: OAuthModuleConfig = {
     {provide: OAuthModuleConfig, useValue: authModuleConfig},
     {provide: ValidationHandler, useClass: JwksValidationHandler},
     {provide: OAuthStorage, useValue: localStorage},
-    {provide: AuthConfig, useValue: authConfig},
   ],
   bootstrap: [AppComponent]
 })

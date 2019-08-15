@@ -1,0 +1,18 @@
+image: node:12
+
+cache:
+  paths:
+    - node_modules/
+
+pages:
+  stage: deploy
+  before_script:
+    - npm install -g @angular/cli
+    - npm install
+  script:
+    - ng build --configuration stage --base-href=/${CI_PROJECT_NAME}/
+    - cp -r dist public
+    - cp public/index.html public/404.html
+  artifacts:
+    paths:
+      - public

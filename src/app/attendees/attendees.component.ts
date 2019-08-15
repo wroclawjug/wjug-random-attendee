@@ -22,8 +22,6 @@ export class AttendeesComponent {
 
   constructor(private attendeeService: AttendeesService, private oauthService: OAuthService) {
     this.oauthService.tryLogin().then(result => {
-      console.log('login result');
-      console.log(result);
       if (this.oauthService.hasValidAccessToken()) {
         this.fetchMettupEvents();
       }
