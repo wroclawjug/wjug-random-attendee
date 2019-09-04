@@ -9,6 +9,7 @@ script:
   - npm install
   - ng build --base-href=/losowarka/
 deploy:
+  skip_cleanup: true
   provider: script
   script: bash ./deployment/deploy.sh
   on:
