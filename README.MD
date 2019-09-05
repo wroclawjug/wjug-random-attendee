@@ -14,7 +14,4 @@ npm install -g @angular/cli
 ng serve
 ```
 
-For production:
-```
-ng build --base-href=/
-```
+For production, see `.travis.yml`.
