@@ -7,7 +7,7 @@ cache:
 script:
   - npm install -g @angular/cli
   - npm install
-  - ng build --base-href=/losowarka/
+  - ng build --prod --base-href=/losowarka/
 deploy:
   skip_cleanup: true
   provider: script
